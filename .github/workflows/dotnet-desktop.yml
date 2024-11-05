@@ -23,7 +23,7 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.0'             # Specify .NET SDK version
+        dotnet-version: '8.0'             # Specify .NET SDK version
 
     - name: Build the application
       run: dotnet publish MultiInject.sln -c Release -o output
