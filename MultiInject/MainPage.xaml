@@ -1,0 +1,33 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MultiInject.MainPage"
+             Title="DLL Attacher">
+    <Grid Padding="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <HorizontalStackLayout Grid.Row="0" Spacing="10" VerticalOptions="Center">
+            <SearchBar x:Name="ProcessSearchBar" 
+                       Placeholder="Search for a process..."
+                       WidthRequest="300"
+                       TextChanged="OnSearchTextChanged"/>
+            <Button x:Name="AttachButton" 
+                    Text="Attach Library"
+                    IsEnabled="False"
+                    Clicked="OnAttachButtonClicked"/>
+        </HorizontalStackLayout>
+
+        <ListView x:Name="ProcessListView" 
+                  Grid.Row="1"
+                  SelectionMode="Single"
+                  ItemSelected="OnProcessSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding ProcessName}" Detail="{Binding Id}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentPage>
