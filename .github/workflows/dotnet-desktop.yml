@@ -6,11 +6,11 @@ on:
 
 jobs:
   build-and-release:
-    runs-on: ubuntu-latest
-
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
 
     env:
       VERSION: ${{ github.event.ref_name }}  # Set the version tag as the release version
@@ -28,11 +28,19 @@ jobs:
     - name: Install MAUI Workloads
       run: dotnet workload restore
 
-    - name: Build the application
-      run: dotnet publish MultiInject.sln -c Release -o output
+    - name: Build for Windows
+      if: matrix.os == 'windows-latest'
+      run: dotnet publish MultiInject.sln -c Release -o output -f net8.0-windows10.0.19041.0
+
+    - name: Build for macOS
+      if: matrix.os == 'macos-latest'
+      run: dotnet publish MultiInject.sln -c Release -o output -f net8.0-maccatalyst
+
+    - name: Build for Linux
+      if: matrix.os == 'ubuntu-latest'
+      run: dotnet publish MultiInject.sln -c Release -o output -f net8.0
 
     - name: Upload build artifact
-      if: matrix.os == 'ubuntu-latest'
       uses: actions/upload-artifact@v3
       with:
         name: ${{ matrix.os }}-build
