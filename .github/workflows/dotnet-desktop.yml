@@ -25,6 +25,9 @@ jobs:
       with:
         dotnet-version: '8.0'             # Specify .NET SDK version
 
+    - name: Install MAUI Workloads
+      run: dotnet workload restore
+
     - name: Build the application
       run: dotnet publish MultiInject.sln -c Release -o output
 
